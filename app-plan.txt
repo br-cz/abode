@@ -1,0 +1,11 @@
+High level ideas:
+- Users can list their fragrance for sale
+- Other users may purchase this fragrance
+- Any user may list and purchase fragrances, even their own for some weird reason
+- If a user attempts to buy a fragrance, the fragrance is locked for x amount of time.
+    - Locked mean other users can't see nor purchase the fragrance
+    - The user then has x amount of time to enter their payment information
+    - If a user fails to purchase the fragrance, it will be unlocked
+        - Fails = cancels purchase or runs out of time
+- The price may be edited once fragrance is unlocked
+    - Maybe users can haggle? Idk that might annoy sellers but that feature is common among similar apps
