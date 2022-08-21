@@ -1,0 +1,5 @@
+#If server does not restart after making changes while using skaffold:
+    1. Open the package.json file in the ‘auth’ directory
+    2. Find the ‘start’ script
+    3. Update the start script to the following:
+       ts-node-dev --poll src/index.ts 

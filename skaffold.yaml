@@ -1,0 +1,37 @@
+---
+#---This will watch our infra-setup directory, and
+#any time we make a change to a config file, it will apply it to our cluster
+#---Furthermore, any time we make a change to our code in any of our services,
+#it will sync all the files in that directory w/ the appropriate container
+#running that service
+
+#---deploy lists out all the files we want to deploy in our cluster
+#---build/local/push:false because we don't want skaffold to push it on Docker Hub
+#---artifacts = all the builds skaffold will need to make
+#--image = docker image
+#--context = folder the image is based off
+#--docker = docker file to use
+#--sync = tells skaffold how to handle any file changes
+#-needs to do a manual config
+#-inside the src
+#-and to take the changed filed and throw it into
+#-the corresponding path in the container
+
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/kubernetes/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: gengar123/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
