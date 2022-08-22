@@ -24,10 +24,12 @@ deploy:
     manifests:
       - ./infra/kubernetes/*
 build:
-  local:
-    push: false
+  # local: #commented out because we can only have local or gcloudbuild at anytime
+  #   push: false
+  googleCloudBuild:
+    projectId: abode-360117
   artifacts:
-    - image: gengar123/auth
+    - image: us.gcr.io/abode-360117/auth #previously gengar123/auth, now its the google cloud generated name
       context: auth
       docker:
         dockerfile: Dockerfile

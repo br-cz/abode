@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true' #tells nginx some file paths will have regex
 spec:
   rules:
-    - host: abode.ca #pretend domain name for now
+    - host: abode.com #pretend domain name for now
       http:
         paths:
           - path: /api/users/?(.*) #anytime someone makes a request to this, we sent it t backend/service/

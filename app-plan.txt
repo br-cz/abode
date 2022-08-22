@@ -9,3 +9,19 @@ High level ideas:
         - Fails = cancels purchase or runs out of time
 - The price may be edited once fragrance is unlocked
     - Maybe users can haggle? Idk that might annoy sellers but that feature is common among similar apps
+
+
+Using Ingress:
+What is the Ingress? The Ingress is a Kubernetes resource that 
+lets you configure an HTTP load balancer for applications running on Kubernetes, 
+represented by one or more Services. 
+Such a load balancer is necessary to deliver those applications to clients outside of the Kubernetes cluster.
+
+Using gcloud to run our cluster(to reduce lag in our local machine):
+#Don't forget to login with: gcloud auth application-default login
+#Steps to enable google cloud build for our images:
+-Enable gcloudbuild
+-Update skaffold.yaml to use the build
+-Setup ingress on our google cloud cluster: https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+-Update hosts file to point to the correct remote cluster from gcloud (by connecting to gcloud load balancer as it is connected to ingress)
+-Restart skaffold
