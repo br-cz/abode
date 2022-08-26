@@ -33,6 +33,12 @@ spec:
       containers:
         - name: auth
           image: us.gcr.io/abode-360117/auth #gengar123/auth
+          env:
+            - name: JWT_KEY #actual name of our env var in the container
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret #name and key are the names in our kubectl command
+                  key: JWT_KEY
 ---
 #---The triple dashes allows us to create another object in the yaml file
 #---We can group the deployment and cluster ip objects/services because

@@ -3,3 +3,6 @@
     2. Find the ‘start’ script
     3. Update the start script to the following:
        ts-node-dev --poll src/index.ts 
+
+#CreateConfigError in Kubernetes:
+    1. kubectl describe pod {pod_name}
