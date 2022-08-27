@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
 }, {
     toJSON: {
         transform(doc, ret){
-            ret.id = ret._id; //to better match other DB id model
+            ret.id = ret._id; //to better match other DB id model 
             delete ret._id;
             delete ret.password; //removes return's password property
             delete ret.__v;

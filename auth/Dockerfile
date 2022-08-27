@@ -13,8 +13,9 @@ WORKDIR /app
 #as it will be cached
 COPY package.json ./ 
 
-COPY ./ ./
-RUN npm install
+#--only=prod: does not install our testing packages/dependancies
+RUN npm install --omit=dev
+COPY . .
 
 # 3. Default command
 CMD ["npm", "start"]
