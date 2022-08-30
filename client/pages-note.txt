@@ -1,0 +1,2 @@
+NextJS essentially treats each js file / folder in the pages directory as a route.
+Furthermore, index.js is treated as the root route of our app

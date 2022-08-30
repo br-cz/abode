@@ -1,0 +1,4 @@
+There is support for TS in NextJS, BUT it requires exponentially more work
+to add typing, annotations and such
+Furthermore, I believe our focus on this project should be on microservices and not
+an pretty well designed front-end

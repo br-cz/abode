@@ -11,10 +11,17 @@ spec:
     - host: abode.com #pretend domain name for now
       http:
         paths:
-          - path: /api/users/?(.*) #anytime someone makes a request to this, we sent it t backend/service/
+          - path: /api/users/?(.*) #anytime someone makes a request to this, we sent it to backend/service/
             pathType: Prefix
             backend:
               service:
                 name: auth-srv
+                port:
+                  number: 3000
+          - path: /?(.*) #catches every other route
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
                 port:
                   number: 3000

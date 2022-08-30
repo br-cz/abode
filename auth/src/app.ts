@@ -25,7 +25,7 @@ app.use(
         //don't need to encrypt cookies because JWTs are tamper resistant
         //and this allows cookies to be easily read across multiple langs
         signed: false, 
-        secure: process.env.NODE_ENV !== 'test' //allows unsecure requests
+        secure: process.env.NODE_ENV !== 'test' //allows unsecure requests during testing
     })
 )
 
