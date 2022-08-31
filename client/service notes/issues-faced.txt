@@ -1,0 +1,11 @@
+Head issue:
+ReferenceError: error is not defined, so I thought
+it was would throw when no error is thrown however so I went ahead and looked it up
+and used the ? operator to it would work if error was defined
+however that still didnt work
+then I found out error was not being set at all and so i looked at my setError hook
+trying to setError via setErrors(error.response.data.errors);
+ was not working, and it was because our middleware was sending
+ an object named error and not errors
+ Good hour gone from a typo, should learn to sift through google dev
+ tools more often

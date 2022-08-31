@@ -1,0 +1,3 @@
+If we make a file change and it doesn't reflect on the web page,
+kill the client pod and k8s should make a new one immediately that
+(hopefully) works

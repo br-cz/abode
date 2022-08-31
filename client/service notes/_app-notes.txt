@@ -1,0 +1,12 @@
+Why do we need this?
+When next js tries to import a component from any of our routes,
+instead of the simple way of showing the component on the screen
+it first wraps it up in a custom component in next js
+thats referred to as "_app"
+So we simply define it ourselves and pass on the individual components
+like index.js unto it
+We do this because when try to use global CSS,
+we can only import it in _app 
+
+Reference:
+https://github.com/vercel/next.js/blob/deprecated-main/errors/css-global.md
