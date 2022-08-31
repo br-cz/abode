@@ -12,6 +12,7 @@ const Page = () => {
       email,
       password,
     },
+    // onSuccess: () => Router.push('/'), //redirect successful signup to landing page
     onSuccess: () => Router.push('/'), //redirect successful signup to landing page
   });
 

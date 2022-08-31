@@ -1,5 +1,5 @@
-import axios from 'axios'; //need this here instead useRequest hook because get-init-props is a next js function
-import https from 'https';
+import axios from 'axios';
+import buildClient from '../api/build-client';
 
 const Page = ({ currentUser }) => {
   //if this returns nulls, make sure we are on https://abode.com/auth/signup (https is important as we had that set)
@@ -11,35 +11,15 @@ const Page = ({ currentUser }) => {
   return <h1>Landing Page</h1>;
 };
 
-//getInitProps is called on the initial request to server
-//this is when we can fetch data that we need
-//such as if the user is logged in
-Page.getInitialProps = async ({ req }) => {
-  const agent = new https.Agent({
-    rejectUnauthorized: false,
-  });
+//getInitProps is called on the initial request to server,
+//this is when we can fetch data that we need,
+//such as if the user is logged in.
+//Furthermore, the first argument to our function is usually referred to as context
+Page.getInitialProps = async (context) => {
+  const client = await buildClient(context);
 
-  //   console.log('req', req.headers);
-
-  //window only exists inside the browser, not in a node js environment
-  if (typeof window === 'undefined') {
-    //let ingress connect us to to the proper route
-    //ingress-nginx is the namespace in k8s, and the controller is the service name and everything else is the domain template
-    const { data } = await axios.get(
-      // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
-      'https://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
-      {
-        httpsAgent: agent,
-        headers: req.headers, //let all the attributes from the request be passed along unto ingress
-      }
-    );
-    return data;
-  } else {
-    //we are on the browser and can let the browser do its thing according to our diagram
-    const { data } = await axios.get('/api/users/currentuser');
-    console.log(data);
-    return data;
-  }
+  const { data } = await client.get('/api/users/currentuser');
+  return data;
 };
 
 export default Page;
