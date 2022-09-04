@@ -5,8 +5,7 @@ import jwt from 'jsonwebtoken';
 
 import { User } from '../models/user';
 
-import { validateRequest } from '@abodeorg/common';
-import { BadRequestError } from '@abodeorg/common';
+import { validateRequest, BadRequestError } from '@abodeorg/common';
 
 const router = express.Router();
 
