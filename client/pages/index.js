@@ -17,7 +17,7 @@ const Page = ({ currentUser }) => {
 //such as if the user is logged in.
 //Furthermore, the first argument to our function is usually referred to as context
 Page.getInitialProps = async (context) => {
-  console.log('LANDING PAGE');
+  // console.log('LANDING PAGE');
   const client = await buildClient(context); //await to build client
 
   const { data } = await client.get('/api/users/currentuser'); //common await for axios method
