@@ -19,28 +19,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: nats-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: nats
   template:
     metadata:
       labels:
-        app: auth
+        app: nats
     spec:
       containers:
-        - name: auth
-          image: us.gcr.io/abode-360117/auth #gengar123/auth
-          env:
-            - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/frags'
-            - name: JWT_KEY #actual name of our env var in the container
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret #name and key are the names in our kubectl command
-                  key: JWT_KEY
+        - name: nats
+          image: nats-streaming: 0.17.0
+          args: [
+            '-p',
+            '4222',
+            '-m',
+            '8222',
+            '-hbi',
+            '5s',
+            '-hbt',
+            '5s',
+            'hbf',
+            '2',
+            '-SD',
+            '-cid',
+            'abode'
+          ]
 ---
 #---The triple dashes allows us to create another object in the yaml file
 #---We can group the deployment and cluster ip objects/services because
@@ -50,12 +57,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: nats-srv
 spec:
   selector:
-    app: auth
+    app: nats
   ports:
-    - name: auth
+    - name: nats
       protocol: TCP
       port: 3000
       targetPort: 3000

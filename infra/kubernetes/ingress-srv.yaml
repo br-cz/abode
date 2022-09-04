@@ -18,6 +18,13 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          - path: /api/frags/?(.*) #anytime someone makes a request to this, we sent it to backend/service/
+            pathType: Prefix
+            backend:
+              service:
+                name: frags-srv
+                port:
+                  number: 3000
           - path: /?(.*) #catches every other route
             pathType: Prefix
             backend:

@@ -19,23 +19,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: frags-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: frags
   template:
     metadata:
       labels:
-        app: auth
+        app: frags
     spec:
       containers:
-        - name: auth
-          image: us.gcr.io/abode-360117/auth #gengar123/auth
+        - name: frags
+          image: us.gcr.io/abode-360117/frags #gengar123/frags
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/frags'
+              value: 'mongodb://frags-mongo-srv:27017/frags'
             - name: JWT_KEY #actual name of our env var in the container
               valueFrom:
                 secretKeyRef:
@@ -50,12 +50,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: frags-srv
 spec:
   selector:
-    app: auth
+    app: frags
   ports:
-    - name: auth
+    - name: frags
       protocol: TCP
       port: 3000
       targetPort: 3000
