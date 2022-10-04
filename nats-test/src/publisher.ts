@@ -1,21 +1,33 @@
 import nats from 'node-nats-streaming';
+import { FragCreatedPublisher } from './events/frag-created-publisher';
 
 console.clear();
 
-const stan = nats.connect('fragz', 'abc', {
+const stan = nats.connect('abode', 'abc', {
   url: 'http://localhost:4222',
 });
 
-stan.on('connect', () => {
+stan.on('connect', async () => {
   console.log('Publisher connected to NATS');
 
-  const data = JSON.stringify({
-    id: '123',
-    title: 'versace eros',
-    price: 20,
-  });
+  const publisher = new FragCreatedPublisher(stan);
+  try {
+    publisher.publish({
+      id: '69',
+      title: 'dylan blue',
+      price: 100,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 
-  stan.publish('frag:created', data, () => {
-    console.log('Event published');
-  });
+  // const data = JSON.stringify({
+  //   id: '123',
+  //   title: 'versace eros',
+  //   price: 20,
+  // });
+
+  // stan.publish('frag:created', data, () => {
+  //   console.log('Event published');
+  // });
 });

@@ -1,0 +1,2 @@
+The whole reason I wanted to go with this idea is because having a bunch of plain strings for event types is no good 
+and having specific typing for the data within our events allows us to only access data that exists and not having to look back on what we have repeatedly
