@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest } from '@abodeorg/common';
 import { Fragrance } from '../models/frag';
+import { FragCreatedPublisher } from '../events/publishers/frag-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -23,8 +25,14 @@ router.post(
       price,
       userId: req.currentUser!.id,
     });
-
     await frag.save();
+
+    await new FragCreatedPublisher(natsWrapper.client).publish({
+      id: frag.id,
+      title: frag.title,
+      price: frag.price,
+      userId: frag.userId,
+    });
 
     res.status(201).send(frag);
   }

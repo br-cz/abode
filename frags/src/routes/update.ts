@@ -7,6 +7,9 @@ import {
   UnauthorizedError,
 } from '@abodeorg/common';
 import { Fragrance } from '../models/frag';
+import { FragUpdatedPublisher } from '../events/publishers/frag-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
+natsWrapper;
 
 const router = express.Router();
 
@@ -39,6 +42,14 @@ router.put(
       price: req.body.price,
     });
     await frag.save();
+
+    new FragUpdatedPublisher(natsWrapper.client).publish({
+      id: frag.id,
+      title: frag.title,
+      price: frag.price,
+      userId: frag.userId,
+    });
+
     res.send(frag);
   }
 );
