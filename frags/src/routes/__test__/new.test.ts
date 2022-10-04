@@ -2,6 +2,8 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Fragrance } from '../../models/frag';
 
+import { natsWrapper } from '../../nats-wrapper';
+
 it('has a route handler listening to /api/frags for post requests', async () => {
   const response = await request(app).post('/api/frags').send({});
 
@@ -86,4 +88,18 @@ it('list a frag with valid inputs', async () => {
   expect(frag.length).toEqual(1);
   expect(frag[0].price).toEqual(20);
   expect(frag[0].title).toEqual(title);
+});
+
+it('publishes an event', async () => {
+  const title = 'asldkfj';
+  await request(app)
+    .post('/api/frags')
+    .set('Cookie', global.getSignInCookie())
+    .send({
+      title,
+      price: 20,
+    })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

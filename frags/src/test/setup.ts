@@ -20,6 +20,7 @@ let mongo: any; //for using this in beforeAll and afterAll
 //copy of mongo (i.e when two services try to use port 3000)
 //this is our hook function for it
 beforeAll(async () => {
+  jest.clearAllMocks(); //make sure we dont pollute test data
   process.env.JWT_KEY = 'monkeypox'; //need to be refactored in a more secure way
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();

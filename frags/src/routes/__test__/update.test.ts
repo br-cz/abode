@@ -2,6 +2,8 @@ import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
 
+import { natsWrapper } from '../../nats-wrapper';
+
 it('returns a 404 if the provided id does not exist', async () => {
   const id = new mongoose.Types.ObjectId().toHexString(); //some random valid id instead random gibberish like "sdjfsadjsajdksla"
   await request(app)
@@ -92,4 +94,24 @@ it('updates the frags provided valid inputs', async () => {
 
   expect(fragRes.body.title).toEqual('new title');
   expect(fragRes.body.price).toEqual(100);
+});
+
+it('publishes an event', async () => {
+  const cookie = global.getSignInCookie();
+
+  const res = await request(app).post('/api/frags').set('Cookie', cookie).send({
+    title: 'asldkfj',
+    price: 20,
+  });
+
+  await request(app)
+    .put(`/api/frags/${res.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: 'new title',
+      price: 100,
+    })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

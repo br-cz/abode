@@ -10,11 +10,24 @@ const db = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error('MONGO_URI not found');
   }
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error('NATS_CLIENT_ID not found');
+  }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error('NATS_CLUSTER_ID not found');
+  }
+  if (!process.env.NATS_URL) {
+    throw new Error('NATS_URL not found');
+  }
 
   try {
     //where 'abode' is the id of the cluster we're connecting to via -cid in nats-depl.yaml
     //
-    await natsWrapper.connect('abode', 'randomstring', 'https://nats-srv:4222');
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
 
     //gracefully close client
     natsWrapper.client.on('close', () => {

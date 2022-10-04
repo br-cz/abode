@@ -34,6 +34,16 @@ spec:
         - name: frags
           image: us.gcr.io/abode-360117/frags #gengar123/frags
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name #identify ticket service running
+            - name: NATS_CLUSTER_ID
+              value: 'abode'
+            - name: NATS_URL
+              value: 'https://nats-srv:4222'
+            - name: MONGO_URI
+              value: 'mongodb://frags-mongo-srv:27017/frags'
             - name: MONGO_URI
               value: 'mongodb://frags-mongo-srv:27017/frags'
             - name: JWT_KEY #actual name of our env var in the container
