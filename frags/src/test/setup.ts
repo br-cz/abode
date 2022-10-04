@@ -10,6 +10,9 @@ declare global {
   function getSignInCookie(): string[];
 }
 
+//use fake nats wrapper to emulate the functionality of the real one without actually using it
+jest.mock('../nats-wrapper');
+
 let mongo: any; //for using this in beforeAll and afterAll
 
 //before we starts all of our tests, create the in memory mongodb
