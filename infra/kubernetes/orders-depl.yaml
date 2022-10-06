@@ -1,0 +1,71 @@
+#api version = this tells k8s which version of k8s objects we want it to look it
+#apps/v1 means the deployment will be inside the obj called apps/v1
+
+#kind = what kind of object to create
+
+#metadata = config options for the object we're going to create
+#name of deployment
+
+#spec = the exact attributes we apply to the object we're going to create
+#replicas: the number of pods that we want to create running a specific image
+#selector: allows us to select pods with certain properties
+#matchLabels: tells K8s to look at all the different pods that have been created
+#and manage the ones with the label of app: posts, a key-value pair
+#template: where we specify the exact configuration of a pod that we want the deployment to create
+#the below is some configuration that will be applied to all pods created by the deployment
+#tells deployment to make a pod with label app:posts
+#containers = we can create many containers in a single pod
+#the "-" signifies an element to create for the array of pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      containers:
+        - name: orders
+          image: us.gcr.io/abode-360117/orders #gengar123/orders
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name #identify ticket service running
+            - name: NATS_CLUSTER_ID
+              value: 'abode'
+            - name: NATS_URL
+              value: 'https://nats-srv:4222'
+            - name: MONGO_URI
+              value: 'mongodb://orders-mongo-srv:27017/orders'
+            - name: MONGO_URI
+              value: 'mongodb://orders-mongo-srv:27017/orders'
+            - name: JWT_KEY #actual name of our env var in the container
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret #name and key are the names in our kubectl command
+                  key: JWT_KEY
+---
+#---The triple dashes allows us to create another object in the yaml file
+#---We can group the deployment and cluster ip objects/services because
+#there is usually a 1-to-1 mapping b/w the cluster ip service
+#and the deployment the cluster ip service is giving access to
+#---Didn't define spec type because we want the default clusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-srv
+spec:
+  selector:
+    app: orders
+  ports:
+    - name: orders
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
