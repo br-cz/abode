@@ -7,10 +7,11 @@ import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { errorHandler, NotFoundError, currentUser } from '@abodeorg/common';
-import { createFragRouter } from './routes/new';
-import { showFragRouter } from './routes/show';
-import { retrieveFragsRouter } from './routes/retrieve';
-import { updateFragRouter } from './routes/update';
+
+import { deleteOrderRouter } from './routes/delete';
+import { indexOrderRouter } from './routes';
+import { newOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
 
 const app = express();
 //traffic to our app is being proxy'd through ingress and
@@ -29,10 +30,10 @@ app.use(
 
 //should be ran after cookieSession so it can set the req.session property properly
 app.use(currentUser);
-app.use(createFragRouter);
-app.use(showFragRouter);
-app.use(retrieveFragsRouter);
-app.use(updateFragRouter);
+app.use(deleteOrderRouter);
+app.use(indexOrderRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
 
 //send not found error for all undefined routes
 app.all('*', async (req, res) => {
