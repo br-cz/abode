@@ -4,7 +4,9 @@
 // Hence it has specific features for it only, keeping maintainability/scalability in mind
 //
 
+import { OrderStatus } from '@abodeorg/common';
 import mongoose from 'mongoose';
+import { Order } from './order';
 
 // Interface for describing the properties needed to make a new frag
 // Made so we can use type checking with TS when creating a new frag
@@ -25,6 +27,7 @@ interface FragModel extends mongoose.Model<FragDocument> {
 export interface FragDocument extends mongoose.Document {
   title: string;
   price: number;
+  isReserved(): boolean;
 }
 
 const fragSchema = new mongoose.Schema(
@@ -57,11 +60,27 @@ fragSchema.statics.build = (attributes: FragAttributes) => {
   return new Fragrance(attributes);
 };
 
+fragSchema.methods.isReserved = async function () {
+  const existingOrder = await Order.findOne({
+    frag: this,
+    status: {
+      $in: [
+        OrderStatus.Created,
+        OrderStatus.AwaitingPayment,
+        OrderStatus.Complete,
+      ],
+    },
+  });
+
+  if (existingOrder) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 //the objects in the <> define the data type for the arguments
 //Furthermore Frag is assigned the Frag Model
-const Fragrance = mongoose.model<FragDocument, FragModel>(
-  'Fragrance',
-  fragSchema
-);
+const Fragrance = mongoose.model<FragDocument, FragModel>('Frag', fragSchema);
 
 export { Fragrance };
