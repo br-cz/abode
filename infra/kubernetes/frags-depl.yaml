@@ -37,7 +37,7 @@ spec:
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.name #identify ticket service running
+                  fieldPath: metadata.name #identify frag service running
             - name: NATS_CLUSTER_ID
               value: 'abode'
             - name: NATS_URL

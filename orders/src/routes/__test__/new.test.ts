@@ -4,6 +4,7 @@ import { app } from '../../app';
 import { Order } from '../../models/order';
 import { OrderStatus } from '@abodeorg/common';
 import { Fragrance } from '../../models/frag';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('returns an error if the frag does not exist', async () => {
   const fragId = new mongoose.Types.ObjectId();
@@ -52,4 +53,18 @@ it('reserves a frag', async () => {
     .expect(201);
 });
 
-it.todo('emits an order created event');
+it('emits an order created event', async () => {
+  const frag = Fragrance.build({
+    title: 'concert',
+    price: 20,
+  });
+  await frag.save();
+
+  await request(app)
+    .post('/api/orders')
+    .set('Cookie', global.getSignInCookie())
+    .send({ fragId: frag.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

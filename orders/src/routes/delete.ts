@@ -7,6 +7,9 @@ import {
 } from '@abodeorg/common';
 import { requireAuth } from '@abodeorg/common';
 
+import { natsWrapper } from '../nats-wrapper';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
+
 const router = express.Router();
 
 //not really deleting, more like cancelling the order
@@ -17,7 +20,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const { orderId } = req.params;
 
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate('frag'); //populate frag to get frag id
 
     if (!order) {
       throw new NotFoundError();
@@ -28,6 +31,12 @@ router.delete(
     order.status = OrderStatus.Cancelled;
     await order.save();
 
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+      id: order.id,
+      frag: {
+        id: order.frag.id,
+      },
+    });
     res.status(204).send(order);
   }
 );
