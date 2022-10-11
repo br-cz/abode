@@ -25,6 +25,7 @@ interface OrderDocument extends mongoose.Document {
   expiryDate: Date;
   userId: string;
   frag: FragDocument;
+  version: number;
 }
 
 const orderSchema = new mongoose.Schema(

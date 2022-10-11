@@ -30,6 +30,7 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
+    "mongoose-update-if-current": "^1.4.0",
     "node-nats-streaming": "^0.3.2",
     "nodemon": "^2.0.4",
     "ts-node-dev": "^2.0.0",

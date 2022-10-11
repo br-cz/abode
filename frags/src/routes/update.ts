@@ -48,6 +48,7 @@ router.put(
       title: frag.title,
       price: frag.price,
       userId: frag.userId,
+      version: frag.version,
     });
 
     res.send(frag);

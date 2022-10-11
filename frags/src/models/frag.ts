@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // Interface for describing the properties needed to make a new frag
 // Made so we can use type checking with TS when creating a new frag
@@ -9,7 +10,7 @@ interface FragAttributes {
   userId: string;
 }
 
-// Interface for describing the properties of a User model(collection of user)
+// Interface for describing the properties of a Frag model(collection of user)
 // The mongoose.Model<UserDocument> means the user model is extending
 // the Model of type UserDocument
 interface FragModel extends mongoose.Model<FragDocument> {
@@ -21,6 +22,7 @@ interface FragDocument extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
+  version: number;
 }
 
 const fragSchema = new mongoose.Schema(
@@ -49,6 +51,11 @@ const fragSchema = new mongoose.Schema(
     },
   }
 );
+//set _v to version in db
+fragSchema.set('versionKey', 'version');
+
+//use Optimization Concurrency Control
+fragSchema.plugin(updateIfCurrentPlugin);
 
 //used to do type checking with TS, should be used instead of new User
 //make sure this goes before the assignment to 'User'

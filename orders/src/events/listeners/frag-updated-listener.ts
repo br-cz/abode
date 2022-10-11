@@ -9,7 +9,7 @@ export class FragUpdatedListener extends Listener<FragUpdatedEvent> {
 
   //get this interface's data property and set it to data (FragUpdatedEvent['data'])
   async onMessage(data: FragUpdatedEvent['data'], msg: Message) {
-    const frag = await Fragrance.findById(data.id);
+    const frag = await Fragrance.findByIdWithVersion(data);
 
     if (!frag) {
       throw new Error('Frag not found');

@@ -32,6 +32,7 @@ router.post(
       title: frag.title,
       price: frag.price,
       userId: frag.userId,
+      version: frag.version,
     });
 
     res.status(201).send(frag);

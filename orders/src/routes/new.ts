@@ -61,6 +61,7 @@ router.post(
         id: frag.id,
         price: frag.price,
       },
+      version: order.version,
     });
 
     res.status(201).send(order);
