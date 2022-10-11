@@ -30,8 +30,8 @@ router.put(
       throw new NotFoundError();
     }
 
-    console.log(frag.userId);
-    console.log(req.currentUser!.id);
+    // console.log(frag.userId);
+    // console.log(req.currentUser!.id);
 
     if (frag.userId !== req.currentUser!.id) {
       throw new UnauthorizedError();
