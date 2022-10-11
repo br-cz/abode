@@ -12,6 +12,7 @@ import { Order } from './order';
 // Made so we can use type checking with TS when creating a new frag
 // because mongoose does not tell TS what types the parameters are
 interface FragAttributes {
+  id: string;
   title: string;
   price: number;
 }
@@ -57,7 +58,11 @@ const fragSchema = new mongoose.Schema(
 //used to do type checking with TS, should be used instead of new Frag
 //make sure this goes before the assignment to 'Frag'
 fragSchema.statics.build = (attributes: FragAttributes) => {
-  return new Fragrance(attributes);
+  return new Fragrance({
+    _id: attributes.id,
+    title: attributes.title,
+    price: attributes.price,
+  });
 };
 
 fragSchema.methods.isReserved = async function () {
