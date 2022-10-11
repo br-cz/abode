@@ -28,7 +28,7 @@ interface FragModel extends mongoose.Model<FragDocument> {
 export interface FragDocument extends mongoose.Document {
   title: string;
   price: number;
-  isReserved(): boolean;
+  isReserved(): Promise<boolean>;
 }
 
 const fragSchema = new mongoose.Schema(
@@ -59,6 +59,7 @@ const fragSchema = new mongoose.Schema(
 //make sure this goes before the assignment to 'Frag'
 fragSchema.statics.build = (attributes: FragAttributes) => {
   return new Fragrance({
+    //renamed with id to match db model
     _id: attributes.id,
     title: attributes.title,
     price: attributes.price,
