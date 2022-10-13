@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
-
+import { Fragrance } from '../../models/frag';
 import { natsWrapper } from '../../nats-wrapper';
 
 it('returns a 404 if the provided id does not exist', async () => {
@@ -114,4 +114,26 @@ it('publishes an event', async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it('does not allow currently reserved frag to be bought', async () => {
+  const cookie = global.getSignInCookie();
+
+  const res = await request(app).post('/api/frags').set('Cookie', cookie).send({
+    title: 'asldkfj',
+    price: 20,
+  });
+
+  const frag = await Fragrance.findById(res.body.id);
+  frag!.set({ orderId: new mongoose.Types.ObjectId().toHexString() });
+  await frag!.save();
+
+  await request(app)
+    .put(`/api/frags/${res.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: 'new title',
+      price: 100,
+    })
+    .expect(400);
 });

@@ -5,6 +5,7 @@ import {
   validateRequest,
   NotFoundError,
   UnauthorizedError,
+  BadRequestError,
 } from '@abodeorg/common';
 import { Fragrance } from '../models/frag';
 import { FragUpdatedPublisher } from '../events/publishers/frag-updated-publisher';
@@ -32,6 +33,10 @@ router.put(
 
     // console.log(frag.userId);
     // console.log(req.currentUser!.id);
+
+    if (frag.orderId) {
+      throw new BadRequestError('Frag reserved');
+    }
 
     if (frag.userId !== req.currentUser!.id) {
       throw new UnauthorizedError();
