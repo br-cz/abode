@@ -23,6 +23,7 @@ interface FragDocument extends mongoose.Document {
   price: number;
   userId: string;
   version: number;
+  orderId?: string;
 }
 
 const fragSchema = new mongoose.Schema(
@@ -39,14 +40,15 @@ const fragSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    orderId: {
+      type: String,
+    },
   },
   {
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id; //to better match other DB id model
         delete ret._id;
-        delete ret.password; //removes return's password property
-        delete ret.__v;
       },
     },
   }
