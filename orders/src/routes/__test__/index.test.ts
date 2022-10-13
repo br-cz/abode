@@ -2,11 +2,13 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Order } from '../../models/order';
 import { Fragrance } from '../../models/frag';
+import mongoose from 'mongoose';
 
 const buildFrag = async () => {
   const frag = Fragrance.build({
     title: 'concert',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 

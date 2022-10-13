@@ -1,12 +1,14 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Fragrance } from '../../models/frag';
+import mongoose from 'mongoose';
 
 it('fetches the order', async () => {
   // Create a Fragrance
   const frag = Fragrance.build({
     title: 'Armani Acqua',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 
@@ -36,6 +38,7 @@ it('returns an error if one user tries to fetch another users order', async () =
   const frag = Fragrance.build({
     title: 'Armani Acqua',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 

@@ -4,12 +4,14 @@ import { Fragrance } from '../../models/frag';
 import { Order } from '../../models/order';
 import { OrderStatus } from '@abodeorg/common';
 import { natsWrapper } from '../../nats-wrapper';
+import mongoose from 'mongoose';
 
 it('marks an order as cancelled', async () => {
   // create a frag with frag Model
   const frag = Fragrance.build({
     title: 'Giorgio Armani',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 
@@ -40,6 +42,7 @@ it('emits a order cancelled event', async () => {
   const frag = Fragrance.build({
     title: 'Giorgio Armani',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 

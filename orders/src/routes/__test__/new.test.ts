@@ -21,6 +21,7 @@ it('returns an error if the frag is already reserved', async () => {
   const frag = Fragrance.build({
     title: 'Versace Dylan Blue',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 
@@ -43,6 +44,7 @@ it('reserves a frag', async () => {
   const frag = Fragrance.build({
     title: 'concert',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 
@@ -57,6 +59,7 @@ it('emits an order created event', async () => {
   const frag = Fragrance.build({
     title: 'concert',
     price: 20,
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
   await frag.save();
 

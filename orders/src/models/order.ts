@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@abodeorg/common';
 import { FragDocument } from './frag';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // Interface for describing the properties needed to make a new frag
 // Made so we can use type checking with TS when creating a new frag
@@ -57,6 +58,9 @@ const orderSchema = new mongoose.Schema(
     },
   }
 );
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 //used to do type checking with TS, should be used instead of new order
 //make sure this goes before the assignment to 'order'
