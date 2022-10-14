@@ -1,4 +1,5 @@
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const db = async () => {
   //so TS doesn't throw an error about a possibly undefined env variable
@@ -29,6 +30,8 @@ const db = async () => {
     //close our service gracefully
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedListener(natsWrapper.client).listen();
 
     //auth-mongo-serv:27107 is the domain mongoose will connect to
     // /auth is the name of the db mongoose will create for us

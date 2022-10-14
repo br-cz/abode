@@ -39,11 +39,9 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name #identify frag service running
             - name: NATS_CLUSTER_ID
-              value: 'abode'
+              value: abode
             - name: NATS_URL
               value: 'https://nats-srv:4222'
-            - name: MONGO_URI
-              value: 'mongodb://orders-mongo-srv:27017/orders'
             - name: MONGO_URI
               value: 'mongodb://orders-mongo-srv:27017/orders'
             - name: JWT_KEY #actual name of our env var in the container
