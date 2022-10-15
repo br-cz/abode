@@ -61,11 +61,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    # - image: us.gcr.io/abode-360117/expiration
-    #   context: expiration
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - src: 'src/**/*.ts'
-    #         dest: .
+    - image: us.gcr.io/abode-360117/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

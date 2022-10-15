@@ -21,7 +21,6 @@ let mongo: any; //for using this in beforeAll and afterAll
 //copy of mongo (i.e when two services try to use port 3000)
 //this is our hook function for it
 beforeAll(async () => {
-  jest.clearAllMocks(); //make sure we dont pollute test data
   process.env.JWT_KEY = 'monkeypox'; //need to be refactored in a more secure way
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
@@ -32,6 +31,7 @@ beforeAll(async () => {
 //before each test starts, we need to reach into our in memory mongodb and "reset"
 //all data inside there by deleting all collections within
 beforeEach(async () => {
+  jest.clearAllMocks(); //make sure we dont pollute test data
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
