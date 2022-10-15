@@ -16,31 +16,32 @@
 # #tells deployment to make a pod with label app:posts
 # #containers = we can create many containers in a single pod
 # #the "-" signifies an element to create for the array of pods
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: expiration-depl
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: expiration
-#   template:
-#     metadata:
-#       labels:
-#         app: expiration
-#     spec:
-#       containers:
-#         - name: expiration
-#           image: us.gcr.io/abode-360117/expiration
-#           env:
-#             - name: NATS_CLIENT_ID
-#               valueFrom:
-#                 fieldRef:
-#                   fieldPath: metadata.name
-#             - name: NATS_URL
-#               value: 'http://nats-srv:4222'
-#             - name: NATS_CLUSTER_ID
-#               value: ticketing
-#             - name: REDIS_HOST
-#               value: expiration-redis-srv
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+        - name: expiration
+          image: us.gcr.io/abode-360117/expiration
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name #identify expiration service running
+            - name: NATS_CLUSTER_ID
+              value: abode
+            - name: NATS_URL
+              value: 'https://nats-srv:4222'
+            - name: REDIS_HOST #tell this depl how to connect to redis
+              value: expiration-redis-srv #from expiration-redis-depl
+#this service has no need to connect with other services so don't need  a service for it w ports

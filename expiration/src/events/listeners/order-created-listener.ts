@@ -8,9 +8,17 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
-    await expirationQueue.add({
-      orderId: data.id,
-    });
+    //we set expiryDate in routes/new in orders
+    const delay = new Date(data.expiryDate).getTime() - new Date().getTime();
+    console.log('waiting this many seconds to process job:', delay / 1000);
+    await expirationQueue.add(
+      {
+        orderId: data.id,
+      },
+      {
+        delay: delay, //10 second delay
+      }
+    );
 
     msg.ack();
   }

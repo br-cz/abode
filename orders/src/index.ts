@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { natsWrapper } from './nats-wrapper';
 import { FragCreatedListener } from './events/listeners/frag-created-listener';
 import { FragUpdatedListener } from './events/listeners/frag-updated-listener';
+import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
 
 const db = async () => {
   //so TS doesn't throw an error about a possibly undefined env variable
@@ -42,6 +43,7 @@ const db = async () => {
 
     new FragCreatedListener(natsWrapper.client).listen();
     new FragUpdatedListener(natsWrapper.client).listen();
+    new ExpirationCompleteListener(natsWrapper.client).listen();
 
     //auth-mongo-serv:27107 is the domain mongoose will connect to
     // /auth is the name of the db mongoose will create for us
