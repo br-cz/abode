@@ -20,6 +20,10 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
       throw new Error('Order does not exist');
     }
 
+    if (order.status === OrderStatus.Complete) {
+      return msg.ack();
+    }
+
     order!.set({
       status: OrderStatus.Cancelled,
     });
