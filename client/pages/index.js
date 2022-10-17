@@ -1,14 +1,36 @@
-import axios from 'axios';
-import buildClient from '../api/build-client';
+import Link from 'next/link';
 
-const Page = ({ currentUser }) => {
+const Page = ({ currentUser, frags }) => {
   //if this returns nulls, make sure we are on https://abode.com/auth/signup (https is important as we had that set)
   //   console.log(currentUser);
+  const fragList = frags.map((frag) => {
+    return (
+      <tr key={frag.id}>
+        <td>{frag.title}</td>
+        <td>{frag.price}</td>
+        <td>
+          <Link href="/frags/[fragId]" as={`/frags/${frag.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
 
-  return currentUser ? (
-    <h1>You are signed in</h1>
-  ) : (
-    <h1>You are not signed in</h1>
+  return (
+    <div>
+      <h1>frags</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{fragList}</tbody>
+      </table>
+    </div>
   );
 };
 
@@ -16,12 +38,11 @@ const Page = ({ currentUser }) => {
 //this is when we can fetch data that we need,
 //such as if the user is logged in.
 //Furthermore, the first argument to our function is usually referred to as context
-Page.getInitialProps = async (context) => {
-  // console.log('LANDING PAGE');
-  const client = await buildClient(context); //await to build client
+Page.getInitialProps = async (context, client, currentUser) => {
+  const { data } = await client.get('/api/frags');
 
-  const { data } = await client.get('/api/users/currentuser'); //common await for axios method
-  return data;
+  console.log(data);
+  return { frags: data };
 };
 
 export default Page;
