@@ -8,10 +8,10 @@ const useRequest = ({ url, method, body, onSuccess }) => {
   //null makes it so we don't have to check if errors is defined
   const [errors, setErrors] = useState(null);
 
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     try {
       setErrors(null); //reset alert so an error no longer shows up after valid interaction
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...props });
 
       if (onSuccess) {
         onSuccess(response.data);
