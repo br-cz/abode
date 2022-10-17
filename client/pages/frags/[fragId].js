@@ -17,7 +17,7 @@ const FragShow = ({ frag }) => {
       <h1>{frag.title}</h1>
       <h4>Price: {frag.price}</h4>
       {errors}
-      <button onClick={() => doRequest()} className="btn btn-primary">
+      <button onClick={doRequest} className="btn btn-primary">
         Purchase
       </button>
     </div>
