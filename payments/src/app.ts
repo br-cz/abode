@@ -8,6 +8,8 @@ import cookieSession from 'cookie-session';
 
 import { errorHandler, NotFoundError, currentUser } from '@abodeorg/common';
 
+import { createChargeRouter } from './routes/new';
+
 const app = express();
 //traffic to our app is being proxy'd through ingress and
 //since we're only sending cookies when users are connected through https
@@ -25,6 +27,7 @@ app.use(
 
 //should be ran after cookieSession so it can set the req.session property properly
 app.use(currentUser);
+app.use(createChargeRouter);
 
 //send not found error for all undefined routes
 app.all('*', async (req, res) => {
