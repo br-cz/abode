@@ -7,11 +7,14 @@ import jwt from 'jsonwebtoken';
 //used for modular sign in for tests
 declare global {
   //https://stackoverflow.com/questions/68481686/type-typeof-globalthis-has-no-index-signature
-  function getSignInCookie(): string[];
+  function getSignInCookie(id?: string): string[];
 }
 
 //use fake nats wrapper to emulate the functionality of the real one without actually using it
 jest.mock('../nats-wrapper');
+
+process.env.STRIPE_KEY =
+  'sk_test_51LtgVOCLGMesLm3HHpsm8VUkEBsklONUHVO3HHsV5CLLHojAJnaieRRgTvdQJOvCvLvgVk3ReEuPSYOLugNa7RSb00Drrqxuyi';
 
 let mongo: any; //for using this in beforeAll and afterAll
 
@@ -47,10 +50,10 @@ afterAll(async () => {
 });
 
 //different from the auth signIn because having a dependency on a test is kind of ironic when we've been trying to avoid it this whole time
-global.getSignInCookie = () => {
+global.getSignInCookie = (id?: string) => {
   //make a fake JWT payload (id and email)
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(), //some random valid id instead random gibberish like "sdjfsadjsajdksla"
+    id: id || new mongoose.Types.ObjectId().toHexString(), //some random valid id instead random gibberish like "sdjfsadjsajdksla"
     email: 'fakeqtip@gmail.com',
   };
   //create JWT
