@@ -4,7 +4,7 @@ import { Fragrance } from '../models/frag';
 const router = express.Router();
 
 router.get('/api/frags', async (req: Request, res: Response) => {
-  const frags = await Fragrance.find({});
+  const frags = await Fragrance.find({ orderId: undefined });
 
   res.send(frags);
 });
