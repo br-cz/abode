@@ -5,8 +5,6 @@ import { OrderCreatedListener } from './events/listeners/order-created-listener'
 import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 
 const db = async () => {
-  console.log('Testing workflow');
-
   //so TS doesn't throw an error about a possibly undefined env variable
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY not found');
