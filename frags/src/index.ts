@@ -6,6 +6,7 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 
 const db = async () => {
   //so TS doesn't throw an error about a possibly undefined env variable
+  console.log('okay try again');
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY not found');
   }
