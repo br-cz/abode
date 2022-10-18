@@ -1,0 +1,11 @@
+name: payments-tests
+
+on: pull_request #happens every time a pull request is created, updated or reopened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest #make a ubuntu vm/container
+    steps:
+      - uses: actions/checkout@v2 # take all code from project
+      - run: cd payments && npm install && npm run test:ci #run payments tests where ci exists our jest test for us instead of continually watching like it usually does
+
