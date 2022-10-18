@@ -1,6 +1,11 @@
 name: auth-tests
 
-on: pull_request #happens every time a pull request is created, updated or reopened
+#happens every time a pull request is created, updated or reopened from within specified file,
+#as we shouldn't have any dependencies with the other services
+on:
+  pull_request:
+    paths:
+      - 'auth/**'
 
 jobs:
   build:

@@ -1,11 +1,16 @@
-name: auth-tests
+name: orders-tests
 
-on: pull_request #happens every time a pull request is created, updated or reopened
+#happens every time a pull request is created, updated or reopened from within specified file,
+#as we shouldn't have any dependencies with the other services
+on:
+  pull_request:
+    paths:
+      - 'orders/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest #make a ubuntu vm/container
     steps:
       - uses: actions/checkout@v2 # take all code from project
-      - run: cd auth && npm install && npm run test:ci #run auth tests where ci exists our jest test for us instead of continually watching like it usually does
+      - run: cd orders && npm install && npm run test:ci #run orders tests where ci exists our jest test for us instead of continually watching like it usually does
 
