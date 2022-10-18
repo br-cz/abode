@@ -2,6 +2,8 @@ import { app } from './app';
 import mongoose from 'mongoose';
 
 const db = async () => {
+  console.log('testing ci/cd workflow');
+
   //so TS doesn't throw an error about a possibly undefined env variable
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY not found');
