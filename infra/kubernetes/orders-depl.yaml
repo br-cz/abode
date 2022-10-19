@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: us.gcr.io/abode-360117/orders #gengar123/orders
+          image: gengar123/orders #gengar123/orders
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

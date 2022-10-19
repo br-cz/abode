@@ -1,3 +1,5 @@
+#FOR PROD ENVIRONMENT, only change is the host route
+
 #the metadata->annotations tells ingress we are trying to feed it some routing rules
 apiVersion: networking.k8s.io/v1
 kind: Ingress

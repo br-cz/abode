@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: frags
-          image: us.gcr.io/abode-360117/frags #gengar123/frags
+          image: gengar123/frags #gengar123/frags
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: us.gcr.io/abode-360117/auth #gengar123/auth
+          image: gengar123/auth #gengar123/auth
           env:
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/frags'

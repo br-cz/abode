@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: us.gcr.io/abode-360117/client #gengar123/client
+          image: gengar123/client #gengar123/client
 ---
 #---The triple dashes allows us to create another object in the yaml file
 #---We can group the deployment and cluster ip objects/services because
