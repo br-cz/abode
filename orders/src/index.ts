@@ -7,6 +7,7 @@ import { ExpirationCompleteListener } from './events/listeners/expiration-comple
 import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const db = async () => {
+  console.log('Deployed on Digital Ocean!');
   //so TS doesn't throw an error about a possibly undefined env variable
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY not found');
