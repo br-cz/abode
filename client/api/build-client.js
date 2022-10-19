@@ -14,7 +14,7 @@ const buildClient = async ({ req }) => {
     return axios.create({
       baseURL:
         // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
-        'abode.lol',
+        'http://www.abode.lol',
       //   httpsAgent: agent,
       headers: req.headers,
     });
