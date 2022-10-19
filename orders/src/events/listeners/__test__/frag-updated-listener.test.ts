@@ -3,7 +3,7 @@ import { Message } from 'node-nats-streaming';
 import { FragUpdatedEvent } from '@abodeorg/common';
 import { FragUpdatedListener } from '../frag-updated-listener';
 import { natsWrapper } from '../../../nats-wrapper';
-import { Fragrance } from '../../../models/frag';
+import { Fragrance } from '../../../models/frag'; 
 
 const setup = async () => {
   // Create a listener

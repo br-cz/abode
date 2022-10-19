@@ -38,8 +38,8 @@ it('updates the frag, publishes an event, and acks the message', async () => {
 
   await listener.onMessage(data, msg);
 
-  const updatedfrag = await Fragrance.findById(frag.id);
-  expect(updatedfrag!.orderId).not.toBeDefined();
+  const updatedFrag = await Fragrance.findById(frag.id);
+  expect(updatedFrag!.orderId).not.toBeDefined();
   expect(msg.ack).toHaveBeenCalled();
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

@@ -13,7 +13,8 @@ const buildClient = async ({ req }) => {
     //ingress-nginx is the namespace in k8s, and the controller is the service name and everything else is the domain template
     return axios.create({
       baseURL:
-        'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+        // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+        'abode.lol',
       //   httpsAgent: agent,
       headers: req.headers,
     });
