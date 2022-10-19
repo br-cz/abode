@@ -60,6 +60,7 @@ orderSchema.plugin(updateIfCurrentPlugin);
 //used to do type checking with TS, should be used instead of new order
 //make sure this goes before the assignment to 'order'
 orderSchema.statics.build = (attributes: OrderAttributes) => {
+  //remaking order so we can utilize _id
   return new Order({
     _id: attributes.id,
     version: attributes.version,
