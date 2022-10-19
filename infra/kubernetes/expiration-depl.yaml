@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: expiration
-          image: us.gcr.io/abode-360117/expiration
+          image: gengar123/expiration
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

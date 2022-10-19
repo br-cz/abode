@@ -23,13 +23,14 @@ deploy:
   kubectl:
     manifests:
       - ./infra/kubernetes/*
+      - ./infra/kubernetes-dev/*
 build:
-  # local: #commented out because we can only have local or gcloudbuild at anytime
-  #   push: false
-  googleCloudBuild:
-    projectId: abode-360117
+  local: #commented out because we can only have local or gcloudbuild at anytime
+    push: false
+  # googleCloudBuild:
+  #   projectId: abode-360117
   artifacts:
-    - image: us.gcr.io/abode-360117/auth #previously gengar123/auth, now its the google cloud generated name
+    - image: gengar123/auth #previously gengar123/auth, now its the google cloud generated name
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -37,7 +38,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/abode-360117/client
+    - image: gengar123/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -45,7 +46,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: us.gcr.io/abode-360117/frags
+    - image: gengar123/frags
       context: frags
       docker:
         dockerfile: Dockerfile
@@ -53,7 +54,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/abode-360117/orders
+    - image: gengar123/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -61,7 +62,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/abode-360117/expiration
+    - image: gengar123/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -69,7 +70,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/abode-360117/payments
+    - image: gengar123/payments
       context: payments
       docker:
         dockerfile: Dockerfile

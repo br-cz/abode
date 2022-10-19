@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: us.gcr.io/abode-360117/payments #gengar123/frags
+          image: gengar123/payments #gengar123/frags
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
