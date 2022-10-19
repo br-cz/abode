@@ -19,7 +19,7 @@ const Page = ({ currentUser, frags }) => {
 
   return (
     <div>
-      <h1>frags</h1>
+      <h1>Available Fragrances</h1>
       <table className="table">
         <thead>
           <tr>
