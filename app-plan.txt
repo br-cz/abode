@@ -31,3 +31,6 @@ https://about.codecov.io/blog/measuring-typescript-code-coverage-with-jest-and-g
 
 UNABLE TO CONNECT TO POSTMAN????
 CHECK ETC/HOSTS GCLOUD LOAD BALANCER IF CORRECT AHHHHHHH IM GONNA GO INSANE
+
+TODO:
+Deploy and host app for free we're broke bro cmon
