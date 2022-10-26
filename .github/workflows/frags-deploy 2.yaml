@@ -1,0 +1,25 @@
+name: frags-deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frags/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd frags && docker build -t gengar123/frags .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push gengar123/frags
+      - uses: digitalocean/action-doctl@v2 #install doctl and configure it to set kubectl context to doctl, pre-init with our token
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save abode
+      - run: kubectl rollout restart deployment frags-depl
