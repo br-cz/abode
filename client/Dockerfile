@@ -2,7 +2,7 @@
 
 # 1. Specify a base image
 #using v16 because of a bug in libraries like Webpack and Create react app cause by Node v17
-FROM node:16-alpine
+FROM node:16-alpine3.12
  
 # Optional standard: put all files in this directory
 WORKDIR /app
