@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const Page = ({ currentUser, frags }) => {
-  //if we get that we are not signed in / returns nulls, make sure we are on https://abode.com/auth/signup (https is important as we had that set)
+  //if we get that we are not signed in / returns nulls, make sure we are on https://abode.com/auth/signup (https is important as we had that set!)
 
   const fragList = frags.map((frag) => {
     return (
