@@ -16,5 +16,5 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save abode
-      - run: kubectl apply -f infra/kubernetes && kubectl apply -f infra/kubernetes-dev #apply our depl files, pointing to local dev env
+      - run: kubectl apply -f infra/kubernetes && kubectl apply -f infra/kubernetes-prod #apply our depl files, pointing to local dev env
 
