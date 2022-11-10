@@ -1,6 +1,5 @@
 import axios from 'axios'; //need this here instead useRequest hook because get-init-props is a next js function
 
-
 const buildClient = async ({ req }) => {
   //to ignore ssl warning
   //   const agent = new https.Agent({
@@ -14,7 +13,7 @@ const buildClient = async ({ req }) => {
     return axios.create({
       baseURL:
         // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
-        'http://www.abode.lol',
+        'http://www.abode.lol', //url is now official domain
       headers: req.headers,
     });
   } else {

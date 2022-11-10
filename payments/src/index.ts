@@ -5,7 +5,7 @@ import { OrderCreatedListener } from './events/listeners/order-created-listener'
 import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 
 const db = async () => {
-  console.log('Deployed on Digital Ocean!');
+  console.log('Deployed on Digital Ocean!!!');
 
   //so TS doesn't throw an error about a possibly undefined env variable
   if (!process.env.JWT_KEY) {
