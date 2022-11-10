@@ -1,4 +1,4 @@
-# Abode https://abodeorg.herokuapp.com
+# Abode https://www.abode.lol
 
 A "House" (aka Creative House) is the industry term for a company that independently designs and produces perfume. 
 
